@@ -11,6 +11,9 @@ db();
 
 // import and register all routes
 const userRouter = require('./user/user.routes');
+const webhookRouter = require('./webhhook/webhook.routes');
+
+app.use('/webhook', webhookRouter);
 app.use('/api/user', userRouter);
 
 // include all middleware
