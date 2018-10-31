@@ -2,36 +2,40 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const model = mongoose.model('User', {
-  name: {
+  senderId: {
     type: String,
-    required: true,
-    validate: {
-      validator(name) {
-        return validator.isAlphanumeric(name);
-      },
-    },
+    required: [true, 'Sender id is required']
   },
   firstname: {
     type: String,
-    required: true,
+    required: [true, 'Firstname is required'],
     validate: {
       validator(firstname) {
         return validator.isAlphanumeric(firstname);
       },
     },
   },
-  birth: {
-    type: Date,
-    required: true,
-  },
-  city: {
+  lastname: {
     type: String,
-    required: true,
+    required: [true, 'Lastname is required'],
     validate: {
-      validator(city) {
-        return validator.isAlphanumeric(city);
+      validator(firstname) {
+        return validator.isAlphanumeric(firstname);
       },
     },
+  },
+  email: {
+    type: String,
+    required: [true, 'Email is required'],
+    validate: {
+      validator(email) {
+        return validator.isEmail(email);
+      },
+    },
+  },
+  createdAt: {
+    type: Date,
+    required: [true, 'CreatedAt is required'],
   }
 });
 

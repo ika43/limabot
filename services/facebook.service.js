@@ -62,11 +62,34 @@ const sendMarkSeen = (recipientId) => {
     callSendAPI(messageData);
 }
 
+const getUserInfo = async (userId) => {
+    
+    return new Promise((resolve, reject) => {
+        request({
+            uri: 'https://graph.facebook.com/v2.7/' + userId,
+            qs: {
+                access_token: process.env.PAGE_ACCESS_TOKEN
+            }
+
+        }, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+
+                const user = JSON.parse(body);
+                resolve(user);
+            } else {
+                reject(response.error);
+            }
+
+        });
+    })
+}
+
 
 module.exports = {
     callSendAPI,
     sendTypingOff,
     sendTypingOn,
     sendTextMessage,
-    sendMarkSeen
+    sendMarkSeen,
+    getUserInfo
 }

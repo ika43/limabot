@@ -6,7 +6,9 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "amazon-cognito-identity-js": "^3.0.3",
     "apiai": "^4.0.3",
+    "aws-sdk": "^2.345.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -15,6 +17,7 @@
     "http-errors": "~1.6.2",
     "mongoose": "^5.3.6",
     "morgan": "~1.9.0",
+    "node-fetch": "^2.2.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "validator": "^10.8.0"
