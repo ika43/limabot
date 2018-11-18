@@ -24,15 +24,6 @@ const model = mongoose.model('User', {
       },
     },
   },
-  email: {
-    type: String,
-    required: [true, 'Email is required'],
-    validate: {
-      validator(email) {
-        return validator.isEmail(email);
-      },
-    },
-  },
   createdAt: {
     type: Date,
     required: [true, 'CreatedAt is required'],
