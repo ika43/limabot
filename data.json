@@ -17,22 +17,22 @@
                             "type": "postback",
                             "title": "Istorija zakazivanja",
                             "payload": "MY_HISTORY"
+                        }
+                    ]
+                },
+                {
+                    "title": "Zakazivanje",
+                    "type": "nested",
+                    "call_to_actions": [
+                        {
+                            "title": "Feniranje",
+                            "type": "postback",
+                            "payload": "FENIRANJE"
                         },
                         {
-                            "title": "Zakazivanje",
-                            "type": "nested",
-                            "call_to_actions": [
-                                {
-                                    "title": "Informacije o salonu",
-                                    "type": "postback",
-                                    "payload": "CONTACT_INFO"
-                                },
-                                {
-                                    "type": "postback",
-                                    "title": "Istorija zakazivanja",
-                                    "payload": "MY_HISTORY"
-                                }
-                            ]
+                            "type": "postback",
+                            "title": "Farbanje",
+                            "payload": "FARBANJE"
                         }
                     ]
                 }

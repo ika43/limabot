@@ -1,12 +1,42 @@
 const facebookService = require('../services/facebook.service');
 const apiaiService = require('../services/apiai.service');
 const userService = require('../user/user.service');
-const User = require('../user/user.model');
 const { logger } = require('../services/logger.service');
-
+const fs = require('fs');
+const { handleQuickReply } = require('../handlers/quickReplay.handler');
 
 const handleMessage = async (event) => {
+
 	if (event.postback) {
+
+		// HANDLING HAIR SERVICES
+		const hairServices = JSON.parse(fs.readFileSync('usluge.json', 'utf8'));
+		await Promise.all(hairServices.map(async service => {
+			if (service.Tip.toUpperCase() === event.postback.payload) {
+				// send seen
+				facebookService.sendMarkSeen(event.sender.id);
+
+				// send welcome message
+				await facebookService.sendTypingOn(event.sender.id);
+				let quick_replies = [
+					{
+						"content_type": "text",
+						"title": "Da",
+						"payload": service.Tip.toUpperCase(),
+					},
+					{
+						"content_type": "text",
+						"title": "Ne",
+						"payload": service.Tip.toUpperCase(),
+					}
+				]
+				let text = `Cena usluge ${service.Tip} je ${service.Cena},00 RSD. Da li želite da zakažete?`;
+				await facebookService.sendQuickReply(event.sender.id, text, quick_replies);
+				return;
+			}
+		}))
+
+
 		if (event.postback.payload === 'START') {
 
 			// send welcome text
@@ -59,19 +89,26 @@ const handleMessage = async (event) => {
 			return;
 		}
 	}
+
 	if (event.message) {
 
-		let sender_psid = event.sender.id;
-		facebookService.sendMarkSeen(sender_psid);
-		await facebookService.sendTypingOn(sender_psid);
+		if (event.message.quick_reply) {
+			handleQuickReply(event);
+			return;
+		}
+
+		// #region API-AI
+		
+		facebookService.sendMarkSeen(event.sender.id);
+		await facebookService.sendTypingOn(event.sender.id);
 		let text = event.message.text;
 
-
 		// send to api ai
-		let apiAiResponse = await apiaiService.sendToApiai(text, sender_psid);
+		let apiAiResponse = await apiaiService.sendToApiai(text, event.sender.id);
 
 		//then return response
-		facebookService.sendTextMessage(sender_psid, apiAiResponse.result.fulfillment.speech);
+		facebookService.sendTextMessage(event.sender.id, apiAiResponse.result.fulfillment.speech);
+		// #endregion
 		return;
 	}
 }
