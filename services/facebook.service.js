@@ -58,7 +58,7 @@ const datetimeWebViewPicker = (id) => {
                                     "type": "web_url",
                                     "url": "https://date-time-picker.herokuapp.com/",
                                     "title": "Odaberite datum!",
-                                    //"messenger_extensions": true
+                                    "messenger_extensions": true,
                                 }
                             ]
                         }

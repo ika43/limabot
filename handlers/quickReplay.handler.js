@@ -11,6 +11,7 @@ const handleQuickReply = async (event) => {
   } else if (event.message.text === 'Da') {
     await facebookService.sendMarkSeen(event.sender.id);
     await facebookService.sendTypingOn(event.sender.id);
+    console.log(event);
     await facebookService.datetimeWebViewPicker(event.sender.id);
     return
   }
